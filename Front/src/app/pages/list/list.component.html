@@ -1,0 +1,42 @@
+<section>
+  <form class="form" [formGroup]="isrcForm" [ngClass]="{'formFull':trackList.length === 0}">
+    <h1 for="isrc">Add new track</h1>
+    <div class="div-input">
+      <input type="text" class="input" formControlName="isrc">
+      <button class="inputBtn" (click)="searchInDb()">Add</button>
+    </div>
+    <dialog open *ngIf="showModal">
+      <p>{{message}}</p>
+      <form method="dialog" class="formDialog">
+        <button (click)="hideModal()">OK</button>
+      </form>
+    </dialog>
+  </form>
+  <div *ngIf="trackList.length > 0" class="container">
+    <div class="resultInfo">
+      <h2>Search result</h2>
+      <span>{{trackList.length}} Tracks</span>
+    </div>
+    <div class="carbBox">
+      <div *ngFor="let track of trackList" class="card">
+        <div class="imgThumb">
+          <img [src]="track.thumb">
+        </div>
+        <div class="controls">
+          <audio controls [src]="track.link_preview"></audio>
+        </div>
+        <div class="spotifyLink">
+          <a rel="stylesheet" [href]="track.link_spotify" target="_blank"><button class="spotifyLinkBtn">Listen on Spotify</button></a>
+          <p>{{track.duration | date:"mm:ss"}}</p>
+        </div>
+        <div class="title"><p>{{track.name}}</p></div>
+        <div class="artistName"><p>{{track.artists}}</p></div>
+        <div class="release"><p>Release: {{track.release_date | date:"shortDate"}}</p></div>
+        <div *ngIf="track.available_in_brazil" class="country">
+          <p class="pCountry">BR</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
